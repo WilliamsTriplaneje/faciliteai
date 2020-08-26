@@ -4,7 +4,7 @@ require('dotenv').config()
 const express = require('express') //MINIMAL FRAMEWORK FOR ROUTES
 const mongoose = require('mongoose') // DATABASE (MONGODB)
 const cors = require('cors') //FOR URLS
-const routes = require('./routes')
+const routes = require('./routes') 
 
 //START APP
 const app = express()
