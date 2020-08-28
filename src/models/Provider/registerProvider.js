@@ -7,12 +7,13 @@ const registerProviderSchema = new mongoose.Schema({
   providerEmail: {
     type: String,
     unique: true,
-    required: true
+    required: true,
+    lowercase: true,
   },
   providerPassword: {
     type: String,
+    required: true,
     select: false,
-    required: true
   },
 })
 //PRE SAVE INCRYPT PASSWORD

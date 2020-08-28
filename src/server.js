@@ -20,7 +20,8 @@ const start = async () =>{
   //BEFORE, START DATABASE (MONGODB WITH MONGOOSE)
   await mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex : true ,
   })
   const port = 3333
   app.listen(process.env.PORT || port, ()=>{
