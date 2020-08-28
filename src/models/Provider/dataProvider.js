@@ -4,14 +4,14 @@ const mongoose = require("mongoose");
 //SCHEMA DATA
 const dataProviderSchema = new mongoose.Schema({
   provider: {
-    type: String,
-    unique: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "dataProvider",
   },
   nameFantasy: String,
   rSocial: String,
   cnpj: {
     type: String,
-    unique: true
+    unique: true,
   },
   address: {
     street: String,
@@ -22,12 +22,8 @@ const dataProviderSchema = new mongoose.Schema({
   },
   contact: {
     phone: String,
-    email: String
+    email: String,
   },
-  work: {
-    category: String,
-    subcategory: String
-  }
 });
 
 //EXPORT

@@ -1,0 +1,16 @@
+const Subcategory = require("../../models/Admin/Subcategory");
+
+module.exports = {
+  async store(req, res) {
+    const { subcategory, categoryId } = req.body;
+    const name = await Subcategory.create({
+        subcategory,
+        categoryId
+    })
+    res.json(name)
+  },
+  async index(req, res){
+    const subcategory = await Subcategory.find(req.body)
+    return res.json(subcategory)
+  }
+};
