@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 //SCHEMA DATA
 const workProviderSchema = new mongoose.Schema({
-  provider: {
+  workProvider: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "dataProvider",
   },
@@ -11,6 +11,7 @@ const workProviderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
   },
+  nameCategory: String,
   workSubcategory: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Subcategory",
