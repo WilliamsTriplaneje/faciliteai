@@ -4,6 +4,9 @@ const multer = require('multer')
 const routes = express.Router();
 const multerConfig = require('./config/multer')
 
+//MIDDLEWARES
+const isActiveMd = require('./middlewares/adminActive')
+
 //IMPORT CONTROLLERS ---> START
 
 //PROVIDER CONTROLLER -- START
@@ -19,6 +22,9 @@ const uploadProviderController = require('./controllers/Provider/uploadProviderC
 const workProviderController = require('./controllers/Provider/workProviderController')
 
 //PROVIDER CONTROLLER -- END
+
+//AUTH ADMIN CONTROLLER
+const authAdminController = require('./controllers/Admin/authAdminController')
 
 //CATEGORY CONTROLLER -> ADMIN
 const categoryController = require("./controllers/Admin/categoryController");
@@ -50,8 +56,12 @@ routes.get('/index/works/:id', workProviderController.index) //INDEX
 
 //ROUTES ADMIN ---> START
 
+//AUTH CONTROLLER
+routes.post('/register/admin', authAdminController.store) //ADMIN REGISTER
+routes.post('/login/admin', authAdminController.login) // ADMIN LOGIN
+
 //CATEGORY CONTROLLER
-routes.post("/admin/register/category", categoryController.store); //REGISTER CATEGORY
+routes.post("/admin/register/category", isActiveMd, categoryController.store); //REGISTER CATEGORY
 routes.get("/admin/categorys", categoryController.index); //INDEX CATEGORY
 
 //CATEGORY SUBCONTROLLER
