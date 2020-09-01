@@ -4,6 +4,7 @@ require('dotenv').config()
 const express = require('express') //MINIMAL FRAMEWORK FOR ROUTES
 const mongoose = require('mongoose') // DATABASE (MONGODB)
 const cors = require('cors') //FOR URLS
+const path = require('path')
 const routes = require('./routes') 
 
 //START APP
@@ -12,8 +13,9 @@ const app = express()
 //CONFIG APP
 app.use(cors()) //ENABLE FOR ALL URL's
 app.use(express.json()) //READ IN JSON
+app.use(express.urlencoded({extended: true})) //URL ENCODED
 app.use(routes) //IMPORT ROUTES 
-
+app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')))
 
 //START APP ON SERVER
 const start = async () =>{

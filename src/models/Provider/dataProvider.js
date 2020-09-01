@@ -5,13 +5,13 @@ const mongoose = require("mongoose");
 const dataProviderSchema = new mongoose.Schema({
   provider: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "dataProvider",
+    ref: 'registerProvider',
   },
   nameFantasy: String,
   rSocial: String,
   cnpj: {
     type: String,
-    unique: true,
+    required: true,
   },
   address: {
     street: String,
@@ -24,6 +24,10 @@ const dataProviderSchema = new mongoose.Schema({
     phone: String,
     email: String,
   },
+  description: {
+    type: String,
+    maxlength: 150
+  }
 });
 
 //EXPORT

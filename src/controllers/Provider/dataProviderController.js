@@ -9,31 +9,32 @@ module.exports = {
       cnpj,
       address: { street, number, city, state, cep },
       contact: { phone, email },
+      description
     } = req.body;
 
-    if (!cnpj) {
-      try {
-        const data = await dataProvider.create({
-          provider,
-          nameFantasy,
-          rSocial,
-          cnpj,
-          address: { street, number, city, state, cep },
-          contact: { phone, email },
-        });
-        return res.json(data);
-      } catch (err) {
-        return res.json({err: "Falha no registro de dados"})
-      }
-    }
-    else{
-      return res.json({err: "Empresa já cadastrada"})
-    }
+    const listDataProvider = await dataProvider.findOne({ cnpj });
 
-    return;
+    if (!listDataProvider) {
+    try {
+      const data = await dataProvider.create({
+        provider,
+        nameFantasy,
+        rSocial,
+        cnpj,
+        address: { street, number, city, state, cep },
+        contact: { phone, email },
+        description
+      });
+      return res.json(data);
+    } catch (err) {
+      return res.json({ err: "Falha no registro de dados" });
+    }
+    } else {
+    return res.json({ err: "Empresa já cadastrada" });
+    }
   },
   async show(req, res) {
-    const data = await dataProvider.find({ provider: req.params.id });
+    const data = await dataProvider.findOne({ provider: req.params.id });
     return res.json(data);
   },
 };

@@ -5,16 +5,20 @@ const bcryptjs = require("bcryptjs");
 module.exports = {
   //REGISTER PROVIDERS
   async store(req, res) {
-    const { providerEmail, providerPassword } = req.body;
+    const { providerEmail, providerPassword, providerName, providerLastname, isActive } = req.body;
     const provider = await Provider.create({
       providerEmail,
       providerPassword,
+      providerName, 
+      providerLastname,
+      isActive,
     });
     provider.providerPassword = undefined;
     return res.json(provider);
   },
   async login(req, res) {
     const { providerEmail, providerPassword } = req.body;
+    
     const provider = await Provider.findOne({ providerEmail }).select(
       "+providerPassword"
     );

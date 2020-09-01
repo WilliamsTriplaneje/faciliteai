@@ -4,6 +4,8 @@ const bcryptjs = require('bcryptjs')
 
 //SCHEMA DATA
 const registerProviderSchema = new mongoose.Schema({
+  providerName: String,
+  providerLastname: String,
   providerEmail: {
     type: String,
     unique: true,
@@ -15,6 +17,12 @@ const registerProviderSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
+  isLogged: false,
+  isActive: false,
+  createdAt: {
+    type: Date,
+    default: Date.now
+  }
 })
 //PRE SAVE INCRYPT PASSWORD
 registerProviderSchema.pre('save', async function (next) {

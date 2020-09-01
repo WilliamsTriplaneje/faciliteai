@@ -1,6 +1,8 @@
 //IMPORTS
 const express = require("express");
+const multer = require('multer')
 const routes = express.Router();
+const multerConfig = require('./config/multer')
 
 //IMPORT CONTROLLERS ---> START
 
@@ -11,6 +13,7 @@ const authProviderController = require("./controllers/Provider/authProviderContr
 
 //DATA PROVIDER CONTROLLER
 const dataProviderController = require("./controllers/Provider/dataProviderController");
+const uploadProviderController = require('./controllers/Provider/uploadProviderController')
 
 //WORK REGISTER
 const workProviderController = require('./controllers/Provider/workProviderController')
@@ -25,6 +28,7 @@ const subcategoryController = require("./controllers/Admin/subcategoryController
 
 //IMPORT CONTROLLERS ---> END
 
+
 //START ROUTES
 routes.get("/", (req, res) => {
   res.send("Hello World");
@@ -37,13 +41,15 @@ routes.get("/profile/:id", authProviderController.show); //GET PROVIDER DATA ACE
 
 //ROUTER TO REGISTER DATA PROVIDER
 routes.post("/register/data", dataProviderController.store); //REGISTER DATA
-routes.get("/profile/data/:id", dataProviderController.show); //SHOW DATA PROVIDER
+routes.post('/uploads/provider', multer(multerConfig).single('file'), uploadProviderController.store) //ROUTE FOR UPLOAD FILE 
+routes.get("/provider/:id", dataProviderController.show); //SHOW DATA PROVIDER
 
 //ROUTER TO CONTROL WORK PROVIDER
 routes.post('/register/work', workProviderController.store) //REGISTER
 routes.get('/index/works/:id', workProviderController.index) //INDEX
 
 //ROUTES ADMIN ---> START
+
 //CATEGORY CONTROLLER
 routes.post("/admin/register/category", categoryController.store); //REGISTER CATEGORY
 routes.get("/admin/categorys", categoryController.index); //INDEX CATEGORY
@@ -51,6 +57,11 @@ routes.get("/admin/categorys", categoryController.index); //INDEX CATEGORY
 //CATEGORY SUBCONTROLLER
 routes.post("/admin/register/subcategory", subcategoryController.store); //REGISTER SUBCATEGORY
 routes.get("/admin/subcategorys", subcategoryController.index); //INDEX SUBCATEGORY
+
+//UPLOAD FILE CONTROLLER
+routes.delete('/file/delete/provider/:id', uploadProviderController.delete) //DELETE FILES
+routes.get('/files/index', uploadProviderController.index)
+
 //ROUTES ADMIN ---> END
 
 //EXPORT ROUTES FOR SERVER
