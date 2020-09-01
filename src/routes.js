@@ -59,6 +59,7 @@ routes.get('/index/works/:id', workProviderController.index) //INDEX
 //AUTH CONTROLLER
 routes.post('/register/admin', authAdminController.store) //ADMIN REGISTER
 routes.post('/login/admin', authAdminController.login) // ADMIN LOGIN
+routes.get('/profile/admin/:id', authAdminController.show) //SHOW ADMIN DATA
 
 //CATEGORY CONTROLLER
 routes.post("/admin/register/category", isActiveMd, categoryController.store); //REGISTER CATEGORY

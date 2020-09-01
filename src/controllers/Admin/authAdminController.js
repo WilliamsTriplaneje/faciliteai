@@ -31,7 +31,7 @@ module.exports = {
     return res.send(loginAdmin);
   },
   async show(req, res) {
-    const provider = await Provider.findById(req.params.id);
-    return res.json(provider);
+    const admin = await Auth.findById(req.params.id);
+    return res.json(admin);
   },
 };
