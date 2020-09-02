@@ -27,7 +27,8 @@ const dataProviderSchema = new mongoose.Schema({
   description: {
     type: String,
     maxlength: 150
-  }
+  },
+  isActive: Boolean,
 });
 
 //EXPORT

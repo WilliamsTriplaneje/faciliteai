@@ -9,7 +9,8 @@ module.exports = {
       cnpj,
       address: { street, number, city, state, cep },
       contact: { phone, email },
-      description
+      description,
+      isActive
     } = req.body;
 
     const listDataProvider = await dataProvider.findOne({ cnpj });
@@ -23,7 +24,8 @@ module.exports = {
         cnpj,
         address: { street, number, city, state, cep },
         contact: { phone, email },
-        description
+        description,
+        isActive
       });
       return res.json(data);
     } catch (err) {

@@ -7,7 +7,7 @@ module.exports = {
     res.json(name);
   },
   async index(req, res){
-    const category = await Category.find(req.body)
+    const category = await Category.find()
     return res.json(category)
   }
 };

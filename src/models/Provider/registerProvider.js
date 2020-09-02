@@ -17,8 +17,6 @@ const registerProviderSchema = new mongoose.Schema({
     required: true,
     select: false,
   },
-  isLogged: false,
-  isActive: false,
   createdAt: {
     type: Date,
     default: Date.now
