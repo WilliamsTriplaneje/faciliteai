@@ -1,24 +1,35 @@
 //CONTROLLER PROVIDERS
 const Provider = require("../../models/Provider/registerProvider");
 const bcryptjs = require("bcryptjs");
+const { Error } = require("mongoose");
 
 module.exports = {
   //REGISTER PROVIDERS
   async store(req, res) {
-    const { providerEmail, providerPassword, providerName, providerLastname, isActive } = req.body;
-    const provider = await Provider.create({
-      providerEmail,
-      providerPassword,
-      providerName, 
-      providerLastname,
-      isActive,
-    });
-    provider.providerPassword = undefined;
-    return res.json(provider);
+    try {
+      const {
+        providerEmail,
+        providerPassword,
+        providerName,
+        providerLastname,
+        isActive,
+      } = req.body;
+      const provider = await Provider.create({
+        providerEmail,
+        providerPassword,
+        providerName,
+        providerLastname,
+        isActive,
+      });
+      provider.providerPassword = undefined;
+      return res.json(provider);
+    } catch {
+      return res.status(400).send({ error: "Este e-mail já foi cadastrado." });
+    }
   },
   async login(req, res) {
     const { providerEmail, providerPassword } = req.body;
-    
+
     const provider = await Provider.findOne({ providerEmail }).select(
       "+providerPassword"
     );
