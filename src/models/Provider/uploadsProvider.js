@@ -5,10 +5,6 @@ const uploadProviderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'registerProvider'
     },
-    dataProviderId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'dataProvider'
-    },
     name: String,
     size: Number,
     key: String,

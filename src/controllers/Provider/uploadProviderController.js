@@ -3,11 +3,10 @@ const UploadProvider = require("../../models/Provider/uploadsProvider");
 module.exports = {
   async store(req, res) {
     const { originalname: name, size, key, location: url = "" } = req.file;
-    const { provider, dataProviderId } = req.body;
+    const { provider } = req.body;
 
     const uploadsProvider = await UploadProvider.create({
       provider,
-      dataProviderId,
       name,
       size,
       key,
