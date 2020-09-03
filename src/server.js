@@ -25,6 +25,7 @@ const start = async () =>{
     useUnifiedTopology: true,
     useCreateIndex : true ,
   })
+  
   const port = 3333
   app.listen(process.env.PORT || port, ()=>{
     console.log(`server started on port ${port}`)
