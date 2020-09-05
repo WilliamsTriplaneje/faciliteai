@@ -85,10 +85,12 @@ routes.get('/profile/admin/:id', authAdminController.show) //SHOW ADMIN DATA
 //CATEGORY CONTROLLER
 routes.post("/admin/register/category", isActiveMd, categoryController.store); //REGISTER CATEGORY
 routes.get("/admin/categorys", categoryController.index); //INDEX CATEGORY
+routes.get("/admin/category/show/:id", categoryController.show); //INDEX CATEGORY
 
 //CATEGORY SUBCONTROLLER
 routes.post("/admin/register/subcategory", subcategoryController.store); //REGISTER SUBCATEGORY
 routes.get("/admin/subcategorys", subcategoryController.index); //INDEX SUBCATEGORY
+routes.get("/admin/subcategory/filter", subcategoryController.show); //FILTER
 
 //LIST ALL PROVIDERS ON APLICATION
 routes.get('/providers/admin', listCompanys.index)

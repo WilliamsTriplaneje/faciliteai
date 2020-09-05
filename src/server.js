@@ -1,7 +1,7 @@
 //READ FILES ON ENV
 require('dotenv').config()
 //IMPORTS
-const express = require('express') //MINIMAL FRAMEWORK FOR ROUTES
+const express = require('express') //MINI FRAMEWORK FOR ROUTES
 const mongoose = require('mongoose') // DATABASE (MONGODB)
 const cors = require('cors') //FOR URLS
 const path = require('path')
@@ -25,7 +25,6 @@ const start = async () =>{
     useUnifiedTopology: true,
     useCreateIndex : true ,
   })
-  
   const port = 3333
   app.listen(process.env.PORT || port, ()=>{
     console.log(`server started on port ${port}`)

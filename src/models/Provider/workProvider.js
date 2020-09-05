@@ -7,19 +7,25 @@ const workProviderSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "dataProvider",
   },
+  workName: String,
   workCategory: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
+    type: String,
+    required: true
   },
-  nameCategory: String,
-  workSubcategory: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subcategory",
+  workSubcategory:{
+    type: String,
+    required: true
+  },
+  value: {
+    type: String,
+    required: true
   },
   workDescription: {
       type: String,
       required: true
-  }
+  },
+  typePay: String,
+  isActive: Boolean
 });
 
 //EXPORT
