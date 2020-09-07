@@ -14,8 +14,8 @@ module.exports = {
     return res.json(subcategory);
   },
   async show(req, res) {
-    const { category } = req.query;
-    const subcategory = await Subcategory.find({ categoryId: category });
+    const { categoryId } = req.query;
+    const subcategory = await Subcategory.find({ categoryId: categoryId });
     return res.json(subcategory)
   },
 };
