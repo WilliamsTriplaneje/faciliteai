@@ -15,7 +15,7 @@ app.use(cors()) //ENABLE FOR ALL URL's
 app.use(express.json()) //READ IN JSON
 app.use(express.urlencoded({extended: true})) //URL ENCODED
 app.use(routes) //IMPORT ROUTES 
-app.use('/files', express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')))
+app.use(process.env.PUBLIC_URL, express.static(path.resolve(__dirname, '..', 'tmp', 'uploads')))
 
 //START APP ON SERVER
 const start = async () =>{
@@ -23,7 +23,8 @@ const start = async () =>{
   await mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex : true ,
+    useCreateIndex: true ,
+    useFindAndModify: true
   })
   const port = 3333
   app.listen(process.env.PORT || port, ()=>{

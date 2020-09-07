@@ -56,7 +56,19 @@ routes.get("/", (req, res) => {
 });
 
 //ROUTER TO AUTH PROVIDER
-routes.post("/register/provider", authProviderController.store); //REGISTER
+routes.post("/register/provider", 
+multer(multerConfig).fields([
+  {
+    name: 'cpfFile', maxCount: 1
+  },
+  {
+    name: 'cnpjFile', maxCount: 1
+  },
+  {
+    name: 'rgFile', maxCount: 1
+  }
+]), 
+authProviderController.store); //REGISTER
 routes.post("/login/provider", authProviderController.login); //LOGIN
 routes.get("/profile/:id", authProviderController.show); //GET PROVIDER DATA ACESS
 
@@ -64,7 +76,25 @@ routes.get("/profile/:id", authProviderController.show); //GET PROVIDER DATA ACE
 
 //ROUTER TO REGISTER DATA PROVIDER
 routes.post("/register/data", dataProviderController.store); //REGISTER DATA
-routes.post('/uploads/provider', multer(multerConfig).single('file'), uploadProviderController.store) //ROUTE FOR UPLOAD FILE 
+routes.put('/uploads/provider', 
+
+// multer(multerConfig).single('file'), 
+multer(multerConfig).any(), 
+
+// multer(multerConfig).fields([
+//   {
+//     name: 'cpfFile', maxCount: 1
+//   },
+//   {
+//     name: 'cnpjFile', maxCount: 1
+//   },
+//   {
+//     name: 'rgFile', maxCount: 1
+//   }
+// ]), 
+
+
+uploadProviderController.store) //ROUTE FOR UPLOAD FILE 
 routes.get("/provider/:id", dataProviderController.show); //SHOW DATA PROVIDER
 
 //--------------------------------------------------------------------------------->

@@ -44,6 +44,15 @@ const dataProviderSchema = new mongoose.Schema({
     type: String,
     maxlength: 150
   },
+  rgUrl: {
+    type: String
+  },
+  cnpjUrl: {
+    type: String
+  },
+  cpfUrl: {
+    type: String
+  },
   isActive: Boolean,
 });
 
