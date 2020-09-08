@@ -24,6 +24,13 @@ const uploadProviderController = require('./controllers/Provider/uploadProviderC
 const workProviderController = require('./controllers/Provider/workProviderController')
 //PROVIDER CONTROLLER -- END
 
+const authenticationsController = require("./controllers/authenticationsController");
+const companiesController = require("./controllers/companiesController");
+
+const authMiddlewares = require("./middlewares/authMiddlewares");
+
+
+
 
 //--------------------------------------------------------------------------------->
 
@@ -139,5 +146,20 @@ routes.get('/files/index', uploadProviderController.index)
 
 //ROUTES ADMIN ---> END
 
+
+routes.post("/login", authenticationsController.login); //LOGIN
+routes.post("/register", authMiddlewares.registerMiddleware,  authenticationsController.register);
+
+routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.store);
+routes.put('/companies/:id/uploads', authMiddlewares.isAuthenticated, 
+  multer(multerConfig).any(), uploadProviderController.store);
+// routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.store);
+// routes.get("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);
+// routes.put("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);
+// routes.delete("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);
+
+//LOGIN
+
+
 //EXPORT ROUTES FOR SERVER
-module.exports = routes;
+module.exports = routes
