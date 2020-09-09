@@ -18,6 +18,7 @@ module.exports = {
     bucket: AWS_BUCKET,
     acl: 'public-read',
     cacheControl: 'max-age=31536000',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
         cb(null, getUniqueFilename(file.originalname)); //use Date.now() for unique file keys
     }
