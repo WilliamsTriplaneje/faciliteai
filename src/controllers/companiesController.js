@@ -1,11 +1,11 @@
 const User = require("../models/user");
 const Company = require("../models/company");
-const { APP_URL, PUBLIC_URL } = require("../config/Constants");
+const { APP_URL, PUBLIC_URL, AWS_BUCKET_URL } = require("../config/Constants");
 const path = require('path')
 const { comparePasswords, generateToken } = require("../utils/AuthUtils");
 
-function getUrlFromFilename(filename) {
-  return path.join(APP_URL, PUBLIC_URL, filename);
+function getLocalUrlFromFilename(filename) {
+  return (APP_URL + '/' + PUBLIC_URL + '/' + filename)
 }
 
 module.exports = {
@@ -37,14 +37,18 @@ module.exports = {
   },
   async uploads(req, res) {
     const { id } = req.params;
-
+    console.log(req.files)
     const cpfFile = req.files.find((value) => value.fieldname === "cpfFile");
     const cnpjFile = req.files.find((value) => value.fieldname === "cnpjFile");
     const rgFile = req.files.find((value) => value.fieldname === "rgFile");
 
-    const cpfUrl = getUrlFromFilename(cpfFile.filename);
-    const cnpjUrl = getUrlFromFilename(cnpjFile.filename);
-    const rgUrl = getUrlFromFilename(rgFile.filename);
+    // const cpfUrl = getUrlFromFilename(cpfFile.originalname);
+    // const cnpjUrl = getUrlFromFilename(cnpjFile.originalname);
+    // const rgUrl = getUrlFromFilename(rgFile.originalname);
+
+    const cpfUrl = cpfFile.location;
+    const cnpjUrl = cnpjFile.location;
+    const rgUrl = rgFile.location;
 
     await Company.findOneAndUpdate(id, {
       cpfUrl,
