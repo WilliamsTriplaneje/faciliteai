@@ -152,7 +152,7 @@ routes.post("/register", authMiddlewares.registerMiddleware,  authenticationsCon
 
 routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.store);
 routes.put('/companies/:id/uploads', authMiddlewares.isAuthenticated, 
-  multer(multerConfig).any(), uploadProviderController.store);
+  multer(multerConfig).any(), companiesController.uploads);
 routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.show);
 // routes.put("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);
 // routes.delete("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);

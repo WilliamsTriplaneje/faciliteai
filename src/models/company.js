@@ -53,8 +53,11 @@ const companySchema = new mongoose.Schema({
   cpfUrl: {
     type: String
   },
-  isActive: Boolean,
   isInAnalysis: {
+    type: Boolean,
+    default: true
+  },
+  isActive: {
     type: Boolean,
     default: true
   },

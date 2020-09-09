@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const Company = require("../models/company");
 const { APP_URL, PUBLIC_URL } = require("../config/Constants");
-
+const path = require('path')
 const { comparePasswords, generateToken } = require("../utils/AuthUtils");
 
 function getUrlFromFilename(filename) {
@@ -20,7 +20,6 @@ module.exports = {
       address,
       contact,
       description,
-      isActive,
     } = req.body;
 
     const data = await Company.create({
@@ -33,7 +32,6 @@ module.exports = {
       address,
       contact,
       description,
-      isActive,
     });
     return res.json(data);
   },
