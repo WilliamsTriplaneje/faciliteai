@@ -59,8 +59,9 @@ const companySchema = new mongoose.Schema({
   },
   isActive: {
     type: Boolean,
-    default: true
+    default: false
   },
+  
 });
 
 //EXPORT

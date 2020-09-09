@@ -49,7 +49,8 @@ const subcategoryController = require("./controllers/Admin/subcategoryController
 const listCompanys = require('./controllers/Admin/listCompanysProvider')
 
 //COMPANY APPROVAL
-const companyApproval = require('./controllers/Admin/companyApprovalController')
+const companyApproval = require('./controllers/Admin/companyApprovalController');
+const multerS3 = require("./config/multerS3");
 
 //IMPORT CONTROLLERS ---> END
 
@@ -64,7 +65,7 @@ routes.get("/", (req, res) => {
 
 //ROUTER TO AUTH PROVIDER
 routes.post("/register/provider", 
-multer(multerConfig).fields([
+multer(multerS3).fields([
   {
     name: 'cpfFile', maxCount: 1
   },
@@ -152,10 +153,11 @@ routes.post("/register", authMiddlewares.registerMiddleware,  authenticationsCon
 
 routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.store);
 routes.put('/companies/:id/uploads', authMiddlewares.isAuthenticated, 
-  multer(multerConfig).any(), companiesController.uploads);
+  multer(multerS3).any(), companiesController.uploads);
 routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.show);
-// routes.put("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);
-// routes.delete("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.store);
+routes.get("/admin/companies", authMiddlewares.isAuthenticated,  companiesController.index);
+routes.get("/admin/companies/show/:id", authMiddlewares.isAuthenticated,  companiesController.getCompany);
+routes.put("/companies/approval/:id", authMiddlewares.isAuthenticated,  companiesController.approval);
 
 //LOGIN
 
