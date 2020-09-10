@@ -40,8 +40,8 @@ module.exports = {
     const cpfFile = req.files.find((value) => value.fieldname === "cpfFile");
     const cnpjFile = req.files.find((value) => value.fieldname === "cnpjFile");
     const rgFile = req.files.find((value) => value.fieldname === "rgFile");
-    // const logoFile = req.files.find((value) => value.fieldname === "logoFile");
-    // const proofOfResidenceFile = req.files.find((value) => value.fieldname === "proofOfResidenceFile");
+    const logoFile = req.files.find((value) => value.fieldname === "logoFile");
+    const proofOfResidenceFile = req.files.find((value) => value.fieldname === "proofOfResidenceFile");
 
 
     // const cpfUrl = getUrlFromFilename(cpfFile.originalname);
@@ -51,16 +51,16 @@ module.exports = {
     const cpfUrl = cpfFile.location;
     const cnpjUrl = cnpjFile.location;
     const rgUrl = rgFile.location;
-    // const logoUrl = logoFile.location;
-    // const proofOfResidenceUrl = proofOfResidenceFile.location;
+    const logoUrl = logoFile.location;
+    const proofOfResidenceUrl = proofOfResidenceFile.location;
 
 
     await Company.findOneAndUpdate(id, {
       cpfUrl,
       cnpjUrl,
       rgUrl,
-      // logoUrl,
-      // proofOfResidenceUrl
+      logoUrl,
+      proofOfResidenceUrl
     });
   },
   async show(req, res) {

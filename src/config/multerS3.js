@@ -9,7 +9,7 @@ const { AWS_BUCKET } = require('./Constants');
 
 function getUniqueFilename(originalName){
     // return sanitize(originalName)
-    return Date.now() + path.extname(originalName)
+    return Date.now() + path.parse(originalName).name.replace(/[^a-z0-9]/gi, '_').toLowerCase() + path.extname(originalName)
 }
 
 module.exports = {

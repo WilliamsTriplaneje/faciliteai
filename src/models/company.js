@@ -56,6 +56,9 @@ const companySchema = new mongoose.Schema({
   logoUrl: {
     type: String
   },
+  proofOfResidenceUrl: {
+    type: String
+  },
   isInAnalysis: {
     type: Boolean,
     default: true
