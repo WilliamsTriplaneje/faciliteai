@@ -4,10 +4,20 @@ const Service = require("../models/service");
 
 const { APP_URL, PUBLIC_URL } = require("../config/Constants");
 
-
+const CONTROLLER_NAME = 'SERVICES'
 module.exports = {
     async list(req, res) {
-        return await Service.find()
+        const {
+            companyId
+        } = req.query
+        if(!companyId){
+            const services = await Service.find()
+            return res.status(200).json(services)
+        }
+        const services = await Service.find({
+            companyId
+        })
+        return res.status(200).json(services)
     },
 
     async store(req, res) {
@@ -17,8 +27,11 @@ module.exports = {
             price,
             description,
             typePay,
-            companyId
+            companyId,
+            name
         } = req.body
+
+        console.log(`${CONTROLLER_NAME} Cadastrando serviço da empresa ${companyId}`)
         const company = await Company.findById(companyId)
         if(!company){
             return res.status(400).json({
@@ -32,7 +45,8 @@ module.exports = {
             subcategory,
             price,
             description,
-            typePay
+            typePay,
+            name
         })
 
         // company.services.push(service)
@@ -50,7 +64,13 @@ module.exports = {
 
     async index(req, res) {
         const { id } = req.params;
-        return await Service.findById(id)
+        const service = await Service.findById(id)
+        if(!service){
+            return res.status(400).json({
+                message: "Serviço não encontrada"
+            })
+          }
+        return res.status(200).json(company)
     },
 
     async update(req, res) {
@@ -61,7 +81,8 @@ module.exports = {
             price,
             description,
             typePay,
-            companyId
+            companyId,
+            name
         } = req.body
         
         const service = await Service.findByIdAndUpdate(id, {
@@ -70,7 +91,8 @@ module.exports = {
             price,
             description,
             typePay,
-            companyId
+            companyId,
+            name
         })
         return service
     },
@@ -106,5 +128,25 @@ module.exports = {
             return res.status(500).json({})
         }
         return res.status(201).json({})
+    },
+
+    async listLast(req, res) {
+        const {
+            companyId
+        } = req.params
+        console.log(`${CONTROLLER_NAME}  Listando ultimos serviços da empresa ${companyId}`)
+
+
+        const services = await Service.find({
+            companyId: companyId
+        }, {}, {
+            skip: 0,
+            limit: 5,
+            sort: {
+                createdAt: -1
+            }
+        })
+        
+        return res.status(200).json(services)
     },
 };

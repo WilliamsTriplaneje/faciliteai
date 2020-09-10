@@ -31,8 +31,14 @@ const companySchema = new mongoose.Schema({
     city: String,
     state: String,
     cep: String,
-    lat: String,
-    long: String
+    lat: {
+      type: String,
+      default: ''
+    },
+    long: {
+      type: String,
+      default: ''
+    }
   },
   contact: {
     phone: String,
@@ -71,6 +77,10 @@ const companySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'service' 
   }],
+  createdAt: {
+    type: Date,
+    defalut: Date.now,
+  },
 });
 
 //EXPORT

@@ -32,7 +32,11 @@ const serviceSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  typePay: String
+  typePay: String,
+  createdAt: {
+    type: Date,
+    defalut: Date.now,
+  },
 });
 
 //EXPORT

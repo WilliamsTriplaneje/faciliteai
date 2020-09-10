@@ -35,6 +35,26 @@ module.exports = {
     });
     return res.json(data);
   },
+  async list(req, res) {
+    console.log(`Listando empresas`)
+    const companies = await Company.find()
+    return res.status(200).json(companies)
+  },
+
+  async index(req, res) {
+    const { id } = req.params
+    console.log(`Listando empresa ${id}`)
+    const company = await Company.findById(id)
+    if(!company){
+      return res.status(400).json({
+          message: "Empresa não encontrada"
+      })
+    }
+
+    console.log(company)
+    return res.status(200).json(company)
+  },
+
   async uploads(req, res) {
     const { id } = req.params;
     const cpfFile = req.files.find((value) => value.fieldname === "cpfFile");
@@ -72,13 +92,10 @@ module.exports = {
   },
   async getByUserId(req, res) {
     const { userId } = req.params
+    console.log(`Listando a empresa do usuário ${userId}`)
     const data = await Company.findOne({
       userId
     });
-    return res.json(data)
-  },
-  async index(req,res){
-    const data = await Company.find()
     return res.json(data)
   },
   async getCompany(req,res){
@@ -90,4 +107,21 @@ module.exports = {
     const approval = await Company.findByIdAndUpdate(req.params.id, req.body, { new: true });
     return res.json(approval)
   },
+
+  async approve(req, res) {
+    const { id } = req.params;
+    const {
+        isApproved
+    } = req.body
+
+    const company = await Company.findByIdAndUpdate(id, {
+        isActive: isApproved,
+        isInAnalysis: false
+    })
+
+    if(!company){
+        return res.status(500).json({})
+    }
+    return res.status(201).json({})
+},
 };

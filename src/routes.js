@@ -159,15 +159,17 @@ routes.post("/login", authenticationsController.login); //LOGIN
 routes.post("/register", authMiddlewares.registerMiddleware,  authenticationsController.register);
 
 routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.store);
+routes.get("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.index);
+
 routes.put('/companies/:id/uploads', authMiddlewares.isAuthenticated, 
   multer(multerS3).any(), companiesController.uploads);
-routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.show);
+// routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.show);
 routes.get("/companies/users/:userId", authMiddlewares.isAuthenticated,  companiesController.getByUserId);
 
-routes.get("/admin/companies", authMiddlewares.isAuthenticated,  companiesController.index);
+routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.list);
 routes.get("/admin/companies/show/:id", authMiddlewares.isAuthenticated,  companiesController.getCompany);
-routes.put("/companies/approval/:id", authMiddlewares.isAuthenticated,  companiesController.approval);
-
+// routes.put("/companies/approval/:id", authMiddlewares.isAuthenticated,  companiesController.approval);
+routes.put("/companies/:id/approve", authMiddlewares.isMasterAdmin, companiesController.approve);
 
 routes.get("/services", authMiddlewares.isAuthenticated, servicesController.list);
 routes.post("/services", authMiddlewares.isAuthenticated, servicesController.store);
@@ -175,6 +177,7 @@ routes.get("/services/:id", authMiddlewares.isAuthenticated, servicesController.
 routes.put("/services/:id", authMiddlewares.isAuthenticated, servicesController.update);
 routes.delete("/services/:id", authMiddlewares.isAuthenticated, servicesController.delete);
 routes.put("/services/:id/approve", authMiddlewares.isAuthenticated, servicesController.approve);
+routes.get("/services/:companyId/last", authMiddlewares.isAuthenticated, servicesController.listLast);
 
 
 routes.get("/categories", authMiddlewares.isAuthenticated, categoriesController.list);

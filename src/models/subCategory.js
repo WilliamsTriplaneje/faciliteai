@@ -11,6 +11,10 @@ const subcategorySchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "category",
   },
+  createdAt: {
+    type: Date,
+    defalut: Date.now,
+  },
 });
 
 //EXPORT
