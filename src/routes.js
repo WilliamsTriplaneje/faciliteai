@@ -26,6 +26,13 @@ const workProviderController = require('./controllers/Provider/workProviderContr
 
 const authenticationsController = require("./controllers/authenticationsController");
 const companiesController = require("./controllers/companiesController");
+const servicesController = require("./controllers/servicesController");
+const categoriesController = require("./controllers/categoriesController");
+const subCategoriesController = require("./controllers/subCategoriesController");
+
+
+
+
 
 const authMiddlewares = require("./middlewares/authMiddlewares");
 
@@ -155,11 +162,36 @@ routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.
 routes.put('/companies/:id/uploads', authMiddlewares.isAuthenticated, 
   multer(multerS3).any(), companiesController.uploads);
 routes.get("/companies", authMiddlewares.isAuthenticated,  companiesController.show);
+routes.get("/companies/users/:userId", authMiddlewares.isAuthenticated,  companiesController.getByUserId);
+
 routes.get("/admin/companies", authMiddlewares.isAuthenticated,  companiesController.index);
 routes.get("/admin/companies/show/:id", authMiddlewares.isAuthenticated,  companiesController.getCompany);
 routes.put("/companies/approval/:id", authMiddlewares.isAuthenticated,  companiesController.approval);
 
-//LOGIN
+
+routes.get("/services", authMiddlewares.isAuthenticated, servicesController.list);
+routes.post("/services", authMiddlewares.isAuthenticated, servicesController.store);
+routes.get("/services/:id", authMiddlewares.isAuthenticated, servicesController.index);
+routes.put("/services/:id", authMiddlewares.isAuthenticated, servicesController.update);
+routes.delete("/services/:id", authMiddlewares.isAuthenticated, servicesController.delete);
+routes.put("/services/:id/approve", authMiddlewares.isAuthenticated, servicesController.approve);
+
+
+routes.get("/categories", authMiddlewares.isAuthenticated, categoriesController.list);
+routes.post("/categories", authMiddlewares.isMasterAdmin, categoriesController.store);
+routes.get("/categories/:id", authMiddlewares.isAuthenticated, categoriesController.index);
+routes.put("/categories/:id", authMiddlewares.isMasterAdmin, categoriesController.update);
+routes.delete("/categories/:id", authMiddlewares.isMasterAdmin, categoriesController.delete);
+
+routes.get("/sub-categories", authMiddlewares.isAuthenticated, subCategoriesController.list);
+routes.post("/sub-categories", authMiddlewares.isMasterAdmin, subCategoriesController.store);
+routes.get("/sub-categories/:id", authMiddlewares.isAuthenticated, subCategoriesController.index);
+routes.put("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.update);
+routes.delete("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.delete);
+
+
+
+
 
 
 //EXPORT ROUTES FOR SERVER

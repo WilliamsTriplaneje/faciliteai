@@ -18,10 +18,6 @@ const userSchema = new mongoose.Schema({
     roles: [{
         type: String
     }],
-    services: [{
-         type: mongoose.Schema.Types.ObjectId, 
-         ref: 'service' 
-    }],
     createdAt: {
         type: Date,
         defalut: Date.now,

@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const Company = require("../models/company");
-const { APP_URL, PUBLIC_URL, AWS_BUCKET_URL } = require("../config/Constants");
+const { APP_URL, PUBLIC_URL } = require("../config/Constants");
 const path = require('path')
 const { comparePasswords, generateToken } = require("../utils/AuthUtils");
 
@@ -37,10 +37,12 @@ module.exports = {
   },
   async uploads(req, res) {
     const { id } = req.params;
-    console.log(req.files)
     const cpfFile = req.files.find((value) => value.fieldname === "cpfFile");
     const cnpjFile = req.files.find((value) => value.fieldname === "cnpjFile");
     const rgFile = req.files.find((value) => value.fieldname === "rgFile");
+    // const logoFile = req.files.find((value) => value.fieldname === "logoFile");
+    // const proofOfResidenceFile = req.files.find((value) => value.fieldname === "proofOfResidenceFile");
+
 
     // const cpfUrl = getUrlFromFilename(cpfFile.originalname);
     // const cnpjUrl = getUrlFromFilename(cnpjFile.originalname);
@@ -49,17 +51,29 @@ module.exports = {
     const cpfUrl = cpfFile.location;
     const cnpjUrl = cnpjFile.location;
     const rgUrl = rgFile.location;
+    // const logoUrl = logoFile.location;
+    // const proofOfResidenceUrl = proofOfResidenceFile.location;
+
 
     await Company.findOneAndUpdate(id, {
       cpfUrl,
       cnpjUrl,
       rgUrl,
+      // logoUrl,
+      // proofOfResidenceUrl
     });
   },
   async show(req, res) {
     const { _id } = res.locals.user;
     const data = await Company.findOne({
         userId: _id
+    });
+    return res.json(data)
+  },
+  async getByUserId(req, res) {
+    const { userId } = res.params
+    const data = await Company.findOne({
+      userId
     });
     return res.json(data)
   },

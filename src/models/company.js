@@ -53,6 +53,9 @@ const companySchema = new mongoose.Schema({
   cpfUrl: {
     type: String
   },
+  logoUrl: {
+    type: String
+  },
   isInAnalysis: {
     type: Boolean,
     default: true
@@ -61,7 +64,10 @@ const companySchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  
+  services: [{
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'service' 
+  }],
 });
 
 //EXPORT
