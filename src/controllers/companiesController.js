@@ -71,7 +71,7 @@ module.exports = {
     return res.json(data)
   },
   async getByUserId(req, res) {
-    const { userId } = res.params
+    const { userId } = req.params
     const data = await Company.findOne({
       userId
     });
