@@ -71,6 +71,7 @@ module.exports = {
     const data = await Company.findById(req.params.id)
     return res.json(data)
   },
+  //APROVAÇÃO
   async approval(req, res) {
     const approval = await Company.findByIdAndUpdate(req.params.id, req.body, { new: true });
     return res.json(approval)
