@@ -8,15 +8,25 @@ const CONTROLLER_NAME = 'SERVICES'
 module.exports = {
     async list(req, res) {
         const {
-            companyId
+            companyId,
+            categoryId,
+            subcategoryId
         } = req.query
-        if(!companyId){
-            const services = await Service.find()
-            return res.status(200).json(services)
+
+        where = {}
+
+        if(companyId) {
+            where[companyId] = companyId 
         }
-        const services = await Service.find({
-            companyId
-        })
+        if(categoryId) {
+            where[category] = categoryId 
+        }
+        if(subcategoryId) {
+            where[subcategory] = subcategoryId 
+        }
+
+        const services = await Service.find(where)
+        
         return res.status(200).json(services)
     },
 

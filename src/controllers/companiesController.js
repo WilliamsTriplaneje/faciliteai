@@ -8,7 +8,7 @@ function getLocalUrlFromFilename(filename) {
   return (APP_URL + '/' + PUBLIC_URL + '/' + filename)
 }
 
-const CONTROLLER_NAME = 'SERVICES'
+const CONTROLLER_NAME = 'COMPANIES'
 
 module.exports = {
   async store(req, res) {
@@ -79,23 +79,18 @@ module.exports = {
     const logoUrl = logoFile.location;
     const proofOfResidenceUrl = proofOfResidenceFile.location;
 
-    console.log(cpfUrl)
-    console.log(cnpjUrl)
-    console.log(rgUrl)
-    console.log(logoUrl)
-    console.log(proofOfResidenceUrl)
-
     await Company.updateOne({
       _id: id
     }, { $set: 
-      { 
-        cpfUrl,
-        cnpjUrl,
-        rgUrl,
-        logoUrl,
-        proofOfResidenceUrl
-      } 
-    });
+        { 
+          cpfUrl,
+          cnpjUrl,
+          rgUrl,
+          logoUrl,
+          proofOfResidenceUrl
+        } 
+      }
+    );
 
     return res.status(200).json({
       cpfUrl,

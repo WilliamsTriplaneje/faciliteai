@@ -6,5 +6,7 @@ module.exports = {
     AWS_SECRET: process.env.AWS_SECRET,
     AWS_ID: process.env.AWS_ID,
     AWS_BUCKET: process.env.AWS_BUCKET,
-    IUGU_KEY: process.env.IUGU_KEY,
+    STRIPE_PUBLIC: process.env.STRIPE_PUBLIC,
+    STRIPE_SECRET: process.env.STRIPE_SECRET,
+
 }
