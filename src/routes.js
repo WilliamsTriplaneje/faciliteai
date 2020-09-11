@@ -29,6 +29,8 @@ const companiesController = require("./controllers/companiesController");
 const servicesController = require("./controllers/servicesController");
 const categoriesController = require("./controllers/categoriesController");
 const subCategoriesController = require("./controllers/subCategoriesController");
+const invoicesController = require("./controllers/Payments/invoicesController");
+
 
 
 
@@ -191,6 +193,12 @@ routes.post("/sub-categories", authMiddlewares.isMasterAdmin, subCategoriesContr
 routes.get("/sub-categories/:id", authMiddlewares.isAuthenticated, subCategoriesController.index);
 routes.put("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.update);
 routes.delete("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.delete);
+
+routes.get("/payments/invoices", authMiddlewares.isAuthenticated, invoicesController.list);
+routes.post("/payments/invoices", authMiddlewares.isMasterAdmin, invoicesController.store);
+routes.get("/payments/invoices/:id", authMiddlewares.isAuthenticated, invoicesController.index);
+routes.put("/payments/invoices/:id", authMiddlewares.isMasterAdmin, invoicesController.update);
+routes.delete("/payments/invoices/:id", authMiddlewares.isMasterAdmin, invoicesController.delete);
 
 
 

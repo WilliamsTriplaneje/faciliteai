@@ -5,5 +5,6 @@ module.exports = {
     PUBLIC_URL : process.env.PUBLIC_URL,
     AWS_SECRET: process.env.AWS_SECRET,
     AWS_ID: process.env.AWS_ID,
-    AWS_BUCKET: process.env.AWS_BUCKET
+    AWS_BUCKET: process.env.AWS_BUCKET,
+    IUGU_KEY: process.env.IUGU_KEY,
 }

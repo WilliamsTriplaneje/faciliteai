@@ -38,9 +38,18 @@ module.exports = {
         const {
             name,
         } = req.body
-        const category = await Category.findByIdAndUpdate(id, {
-            name
-        })
+        // const category = await Category.findByIdAndUpdate(id, {
+        //     name
+        // })
+
+        const category = await Category.updateOne({
+            _id: id
+          }, { $set: 
+            { 
+                name,
+            } 
+          });
+
         return res.status(200).json(category)
     },
     

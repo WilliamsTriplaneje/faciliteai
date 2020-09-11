@@ -8,9 +8,12 @@ function getLocalUrlFromFilename(filename) {
   return (APP_URL + '/' + PUBLIC_URL + '/' + filename)
 }
 
+const CONTROLLER_NAME = 'SERVICES'
+
 module.exports = {
   async store(req, res) {
     const { _id } = res.locals.user;
+    
     const {
       nameFantasy,
       rSocial,
@@ -21,6 +24,7 @@ module.exports = {
       contact,
       description,
     } = req.body;
+    console.log(`${CONTROLLER_NAME} Cadastrando empresa ${nameFantasy}`)
 
     const data = await Company.create({
       userId: _id,
@@ -43,7 +47,7 @@ module.exports = {
 
   async index(req, res) {
     const { id } = req.params
-    console.log(`Listando empresa ${id}`)
+    console.log(`${CONTROLLER_NAME} listando empresa ${id}`)
     const company = await Company.findById(id)
     if(!company){
       return res.status(400).json({
@@ -57,6 +61,7 @@ module.exports = {
 
   async uploads(req, res) {
     const { id } = req.params;
+    console.log(`${CONTROLLER_NAME} Atualizando ${req.files ? req.files.length : 0} imagens da empresa ${id}`)
     const cpfFile = req.files.find((value) => value.fieldname === "cpfFile");
     const cnpjFile = req.files.find((value) => value.fieldname === "cnpjFile");
     const rgFile = req.files.find((value) => value.fieldname === "rgFile");
@@ -74,14 +79,31 @@ module.exports = {
     const logoUrl = logoFile.location;
     const proofOfResidenceUrl = proofOfResidenceFile.location;
 
+    console.log(cpfUrl)
+    console.log(cnpjUrl)
+    console.log(rgUrl)
+    console.log(logoUrl)
+    console.log(proofOfResidenceUrl)
 
-    await Company.findOneAndUpdate(id, {
+    await Company.updateOne({
+      _id: id
+    }, { $set: 
+      { 
+        cpfUrl,
+        cnpjUrl,
+        rgUrl,
+        logoUrl,
+        proofOfResidenceUrl
+      } 
+    });
+
+    return res.status(200).json({
       cpfUrl,
       cnpjUrl,
       rgUrl,
       logoUrl,
       proofOfResidenceUrl
-    });
+    })
   },
   async show(req, res) {
     const { _id } = res.locals.user;

@@ -67,11 +67,21 @@ module.exports = {
             })
         }
 
-        const subCategory = await SubCategory.findByIdAndUpdate(id, {
-            name,
-            categoryId: category._id,
-            categoryName: category.name
-        })
+        // const subCategory = await SubCategory.findByIdAndUpdate(id, {
+        //     name,
+        //     categoryId: category._id,
+        //     categoryName: category.name
+        // })
+
+        const subCategory = await SubCategory.updateOne({
+            _id: id
+          }, { $set: 
+            { 
+                name,
+                categoryId: category._id,
+                categoryName: category.name
+            } 
+          });
 
         return res.status(200).json(subCategory)
     },

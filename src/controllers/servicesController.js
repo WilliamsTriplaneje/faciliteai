@@ -85,15 +85,29 @@ module.exports = {
             name
         } = req.body
         
-        const service = await Service.findByIdAndUpdate(id, {
-            category,
-            subcategory,
-            price,
-            description,
-            typePay,
-            companyId,
-            name
-        })
+        // const service = await Service.findByIdAndUpdate(id, {
+        //     category,
+        //     subcategory,
+        //     price,
+        //     description,
+        //     typePay,
+        //     companyId,
+        //     name
+        // })
+
+        const service = await Service.updateOne({
+            _id: id
+          }, { $set: 
+            { 
+                category,
+                subcategory,
+                price,
+                description,
+                typePay,
+                companyId,
+                name
+            } 
+          });
         return service
     },
 
