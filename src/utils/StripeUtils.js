@@ -2,17 +2,17 @@ const stripe = require('../services/stripe')
 
 
 module.exports = {
-    async findOrCreateCustomer(client, token){
-        if(client.stripeId){
-            console.log("Retornando cliente do Stripe já existente")
+    async findOrCreateCustomer(user){
+        if(user.stripeId){
+            console.log("Retornando costumer do Stripe já existente")
             return await stripe.customers.retrieve(
-                client.stripeId
+                user.stripeId
             );
         }
-        console.log("Criando novo cliente do Stripe")
+        console.log("Criando novo costumer do Stripe")
         return await stripe.customers.create({
-            email: client.email,
-            source: token.id
+            email: user.email,
+            // source: token.id
         });
     }
 }

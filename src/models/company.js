@@ -79,7 +79,7 @@ const companySchema = new mongoose.Schema({
   }],
   createdAt: {
     type: Date,
-    defalut: Date.now,
+    default: Date.now,
   },
 });
 

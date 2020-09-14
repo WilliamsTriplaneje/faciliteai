@@ -18,10 +18,12 @@ module.exports = {
     },
 
     async store(req, res) {
-        const { serviceId, token, clientEmail } = req.body;
-
+        const { serviceId, token } = req.body;
+        const { _id: userId , email} = res.locals.user;
+        
+        const user = await User.findById(userId)
         const service = await Service.findById(serviceId)
-
+        
         if(!service) {
             return res.status(400).json({
                 message: "Serviço não encontrado"
@@ -29,33 +31,25 @@ module.exports = {
         }
 
         console.log(`${CONTROLLER_NAME} Realizando pagamento do serviço ${service.name}`)
-        const client = await Client.findOneOrCreate({
-            email: clientEmail
-        })
 
-        if(!client) {
-            return res.status(400).json({
-                message: "Cliente não encontrado"
-            })
-        }
 
-        const customer = await StripeUtils.findOrCreateCustomer(client, token)
+        const customer = await StripeUtils.findOrCreateCustomer(user)
 
         if(!customer) {
             return res.status(400).json({
-                message: "Cliente Stripe não encontrado"
+                message: "Costumer Stripe não encontrado"
             })
         }
 
-        await Client.updateOne( {
-            email: clientEmail
+        await User.updateOne({
+            _id: userId
         },{ $set: 
             { 
                 stripeId: customer.id
             } 
         })
         await Charge.create({
-            clientId: client._id,
+            userId: user._id,
             serviceId: service._id,
             price: service.price,
             date: Date.now()

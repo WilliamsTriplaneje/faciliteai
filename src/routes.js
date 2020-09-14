@@ -29,8 +29,11 @@ const companiesController = require("./controllers/companiesController");
 const servicesController = require("./controllers/servicesController");
 const categoriesController = require("./controllers/categoriesController");
 const subCategoriesController = require("./controllers/subCategoriesController");
-const chargesController = require("./controllers/Payments/chargesController");
+const chargesController = require("./controllers/Stripe/chargesController");
 const clientsController = require("./controllers/clientsController");
+const plansController = require("./controllers/Stripe/plansController");
+
+
 
 
 
@@ -196,11 +199,19 @@ routes.get("/sub-categories/:id", authMiddlewares.isAuthenticated, subCategories
 routes.put("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.update);
 routes.delete("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.delete);
 
-routes.get("/payments/charges", chargesController.list);
-routes.post("/payments/charges", chargesController.store);
-routes.get("/payments/charges/:id", chargesController.index);
-routes.put("/payments/charges/:id", chargesController.update);
-routes.delete("/payments/charges/:id", chargesController.delete);
+routes.get("/stripe/payments/charges", chargesController.list);
+routes.post("/stripe/payments/charges", authMiddlewares.isAuthenticated, chargesController.store);
+routes.get("/stripe/payments/charges/:id", chargesController.index);
+routes.put("/stripe/payments/charges/:id", chargesController.update);
+routes.delete("/stripe/payments/charges/:id", chargesController.delete);
+
+routes.get("/stripe/plans", plansController.list);
+routes.post("/stripe/plans/checkout", authMiddlewares.isAuthenticated, plansController.checkout);
+
+// routes.post("/stripe/plans", plansController.store);
+// routes.get("/stripe/plans/:id", plansController.index);
+// routes.put("/stripe/plans/:id", plansController.update);
+// routes.delete("/stripe/plans/:id", plansController.delete);
 
 routes.get("/clients", clientsController.list);
 routes.post("/clients", clientsController.store);

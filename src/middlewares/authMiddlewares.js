@@ -1,5 +1,5 @@
 const { decodeToken, verifyRole } = require('../utils/AuthUtils')
-const { DEFAULT_ROLES } = require('../config/Constants')
+const { DEFAULT_CLIENT_ROLES, DEFAULT_PROVIDER_ROLES } = require('../config/Constants')
 
 
 const isAuthenticated = async (req, res, next) => {
@@ -84,7 +84,13 @@ const isMasterAdmin = async (req, res, next) => {
 const registerMiddleware = async (req, res, next) => {
     let token = req.headers['x-access-token']
     if (!token) {
-        req.body.roles = DEFAULT_ROLES
+        const { isClient } = req.body
+        if(isClient){
+            req.body.roles = DEFAULT_CLIENT_ROLES
+        }else{
+            req.body.roles = DEFAULT_PROVIDER_ROLES
+        }
+        
         next()
         return
     }

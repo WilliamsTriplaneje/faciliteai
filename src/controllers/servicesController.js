@@ -21,10 +21,10 @@ module.exports = {
             where[companyId] = companyId 
         }
         if(categoryId) {
-            where[category] = categoryId 
+            where['category'] = categoryId 
         }
         if(subcategoryId) {
-            where[subcategory] = subcategoryId 
+            where['subcategory'] = subcategoryId 
         }
 
         const services = await Service.find(where)

@@ -38,7 +38,7 @@ const serviceSchema = new mongoose.Schema({
   typePay: String,
   createdAt: {
     type: Date,
-    defalut: Date.now,
+    default: Date.now,
   },
 });
 

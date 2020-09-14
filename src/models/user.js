@@ -18,9 +18,13 @@ const userSchema = new mongoose.Schema({
     roles: [{
         type: String
     }],
+    stripeId: {
+        type: String,
+        unique: true
+    },
     createdAt: {
         type: Date,
-        defalut: Date.now,
+        default: Date.now,
     },
 });
 //PRE SAVE INCRYPT PASSWORD

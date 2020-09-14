@@ -42,8 +42,12 @@ module.exports = {
             lastname,
             roles,
             isActive,
+            isClient
           } = req.body;
           
+          if(isClient){
+              roles
+          }
           const provider = await User.create({
             email,
             password,

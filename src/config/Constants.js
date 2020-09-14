@@ -1,6 +1,7 @@
 module.exports = {
     JWT_SALT_KEY: process.env.SALT_KEY,
-    DEFAULT_ROLES:  ['provider'],
+    DEFAULT_PROVIDER_ROLES:  ['provider'],
+    DEFAULT_CLIENT_ROLES:  ['client'],
     APP_URL : process.env.APP_URL,
     PUBLIC_URL : process.env.PUBLIC_URL,
     AWS_SECRET: process.env.AWS_SECRET,

@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const chargeSchema = new mongoose.Schema({
-    clientId: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'client',
+        ref: 'user',
     },
     serviceId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -12,11 +12,11 @@ const chargeSchema = new mongoose.Schema({
     price: Number,
     date: {
         type: Date,
-        defalut: Date.now,
+        default: Date.now,
     },
     createdAt: {
         type: Date,
-        defalut: Date.now,
+        default: Date.now,
     },
 });
 
