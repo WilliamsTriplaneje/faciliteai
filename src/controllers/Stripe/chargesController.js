@@ -1,5 +1,4 @@
 const User = require("../../models/user");
-const Client = require("../../models/client");
 const Charge = require("../../models/charge")
 const Service = require("../../models/service");
 
@@ -61,7 +60,7 @@ module.exports = {
                 amount: service.price * 100,
                 currency: "BRL",
                 customer: customer.id,
-                receipt_email: client.email,
+                receipt_email: user.email,
                 description: `Pagamento do serviço ${service.name}`,
                 shipping: {
                 name: token.card.name,
