@@ -6,14 +6,17 @@ const serviceSchema = new mongoose.Schema({
   companyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'company',
+    required: true
   },
   name: String,
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'category',
     required: true
   },
   subcategory: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'subcategory',
     required: true
   },
   price: {

@@ -1,6 +1,8 @@
 const User = require("../models/user");
 const Company = require("../models/company");
 const Service = require("../models/service");
+const NormalizeUtils = require("../utils/NormalizeUtils");
+
 
 const { APP_URL, PUBLIC_URL } = require("../config/Constants");
 
@@ -173,4 +175,25 @@ module.exports = {
         
         return res.status(200).json(services)
     },
+
+    async search(req, res) {
+        const {
+            q
+        } = req.query
+
+        // const services = await Service.find({
+        //     $and: [
+        //         {
+        //             $or: [
+        //                 {
+        //                    // Buscas
+        //                 }
+        //             ]
+        //         }
+        //     ]
+        // }) 
+        return res.status(200).json({
+            q: NormalizeUtils.normalize(q)
+        })
+    }
 };

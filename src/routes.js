@@ -30,6 +30,8 @@ const servicesController = require("./controllers/servicesController");
 const categoriesController = require("./controllers/categoriesController");
 const subCategoriesController = require("./controllers/subCategoriesController");
 const chargesController = require("./controllers/Payments/chargesController");
+const clientsController = require("./controllers/clientsController");
+
 
 
 
@@ -180,15 +182,15 @@ routes.put("/services/:id", authMiddlewares.isAuthenticated, servicesController.
 routes.delete("/services/:id", authMiddlewares.isAuthenticated, servicesController.delete);
 routes.put("/services/:id/approve", authMiddlewares.isAuthenticated, servicesController.approve);
 routes.get("/services/:companyId/last", authMiddlewares.isAuthenticated, servicesController.listLast);
+routes.get("/search/services", servicesController.search);
 
-
-routes.get("/categories", authMiddlewares.isAuthenticated, categoriesController.list);
+routes.get("/categories", categoriesController.list);
 routes.post("/categories", authMiddlewares.isMasterAdmin, categoriesController.store);
 routes.get("/categories/:id", authMiddlewares.isAuthenticated, categoriesController.index);
 routes.put("/categories/:id", authMiddlewares.isMasterAdmin, categoriesController.update);
 routes.delete("/categories/:id", authMiddlewares.isMasterAdmin, categoriesController.delete);
 
-routes.get("/sub-categories", authMiddlewares.isAuthenticated, subCategoriesController.list);
+routes.get("/sub-categories", subCategoriesController.list);
 routes.post("/sub-categories", authMiddlewares.isMasterAdmin, subCategoriesController.store);
 routes.get("/sub-categories/:id", authMiddlewares.isAuthenticated, subCategoriesController.index);
 routes.put("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategoriesController.update);
@@ -199,6 +201,13 @@ routes.post("/payments/charges", chargesController.store);
 routes.get("/payments/charges/:id", chargesController.index);
 routes.put("/payments/charges/:id", chargesController.update);
 routes.delete("/payments/charges/:id", chargesController.delete);
+
+routes.get("/clients", clientsController.list);
+routes.post("/clients", clientsController.store);
+routes.get("/clients/:id", clientsController.index);
+routes.put("/clients/:id", clientsController.update);
+routes.delete("/clients/:id", clientsController.delete);
+
 
 
 
