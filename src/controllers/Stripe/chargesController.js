@@ -63,14 +63,14 @@ module.exports = {
                 receipt_email: user.email,
                 description: `Pagamento do serviço ${service.name}`,
                 shipping: {
-                name: token.card.name,
-                address: {
-                    line1: token.card.address_line1,
-                    line2: token.card.address_line2,
-                    city: token.card.address_city,
-                    country: token.card.address_country,
-                    postal_code: token.card.address_zip
-                }
+                    name: token.card.name,
+                    address: {
+                        line1: token.card.address_line1,
+                        line2: token.card.address_line2,
+                        city: token.card.address_city,
+                        country: token.card.address_country,
+                        postal_code: token.card.address_zip
+                    }
                 }
             },
             {
