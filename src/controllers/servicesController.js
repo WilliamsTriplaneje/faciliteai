@@ -19,7 +19,7 @@ module.exports = {
         const where = {}
 
         if(companyId) {
-            where[companyId] = companyId 
+            where['companyId'] = companyId 
         }
         if(categoryId) {
             where['category'] = categoryId 
