@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
     }],
     stripeId: {
         type: String,
-        unique: true
+        unique: false,
+        required: false
     },
     createdAt: {
         type: Date,

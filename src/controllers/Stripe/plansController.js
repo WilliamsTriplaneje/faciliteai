@@ -1,6 +1,7 @@
 const User = require("../../models/user");
 const stripe = require('../../services/stripe')
 const StripeUtils = require('../../utils/StripeUtils')
+const { SITE_URL } = require('../../config/Constants')
 
 
 const CONTROLLER_NAME = 'PLANS'
@@ -103,10 +104,10 @@ module.exports = {
                 quantity: 1,
             }],
             mode: 'subscription',
-            success_url: 'http://localhost:3000/payment/success',
-            cancel_url: 'http://localhost:3000/payment/cancel',
+            success_url: `${SITE_URL}/sucesso-no-pagamento`,
+            cancel_url: `${SITE_URL}/falha-no-pagamento`,
         });
-        
+
         return res.status(201).json(session)
     },
 };

@@ -208,6 +208,8 @@ routes.delete("/stripe/payments/charges/:id", chargesController.delete);
 routes.get("/stripe/plans", plansController.list);
 routes.post("/stripe/plans/checkout", authMiddlewares.isAuthenticated, plansController.checkout);
 
+
+
 // routes.post("/stripe/plans", plansController.store);
 // routes.get("/stripe/plans/:id", plansController.index);
 // routes.put("/stripe/plans/:id", plansController.update);

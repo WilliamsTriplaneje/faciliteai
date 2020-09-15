@@ -1,11 +1,11 @@
 const User = require("../models/user");
 const { comparePasswords, generateToken } = require('../utils/AuthUtils')
 
-
+const CONTROLLER_NAME = 'AUTHENTICATIONS'
 module.exports = {
     async login(req, res) {
         const { email, password } = req.body;
-
+        
         const user = await User.findOne({ email }).select(
             "+password"
         );
@@ -13,9 +13,12 @@ module.exports = {
         //CONDICIONS
         if (!user) return res.status(400).send({ error: "User not found" });
 
-        if (!(await comparePasswords(password, user.password)))
+        if (!(await comparePasswords(password, user.password))){
+            console.log(`${CONTROLLER_NAME} Erro ao autenticar usuário ${email}`)
             return res.status(400).send({ error: "Invalid password" });
-        
+        }
+            
+        console.log(`${CONTROLLER_NAME} Usuário ${email} autenticado com sucesso`)
         const tokenInfos = {
             _id: user._id,
             email: email,
@@ -41,14 +44,13 @@ module.exports = {
             name,
             lastname,
             roles,
-            isActive,
-            isClient
+            isActive
           } = req.body;
-          
-          if(isClient){
-              roles
-          }
-          const provider = await User.create({
+
+          console.log(`Email: '${email}'`)
+          console.log(`Senha: '${password}'`)
+
+          const user = await User.create({
             email,
             password,
             name,
@@ -56,7 +58,7 @@ module.exports = {
             roles,
             isActive,
           });
-          provider.providerPassword = undefined;
-          return res.json(provider);
+          user.providerPassword = undefined;
+          return res.json(user);
     }
 }

@@ -33,13 +33,20 @@ module.exports = {
 
 
         const customer = await StripeUtils.findOrCreateCustomer(user)
-
+ 
         if(!customer) {
             return res.status(400).json({
                 message: "Costumer Stripe não encontrado"
             })
         }
 
+        // await stripe.customers.update(
+        //     customer.id,
+        //     {
+        //       default_source: token.card.id
+        //     }
+        //   );
+          
         await User.updateOne({
             _id: userId
         },{ $set: 
@@ -59,9 +66,10 @@ module.exports = {
             {
                 amount: service.price * 100,
                 currency: "BRL",
-                customer: customer.id,
+                // customer: customer.id,
                 receipt_email: user.email,
                 description: `Pagamento do serviço ${service.name}`,
+                source: token.id,
                 shipping: {
                     name: token.card.name,
                     address: {
