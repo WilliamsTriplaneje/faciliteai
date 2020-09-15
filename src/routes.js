@@ -178,7 +178,7 @@ routes.get("/admin/companies/show/:id", authMiddlewares.isAuthenticated,  compan
 // routes.put("/companies/approval/:id", authMiddlewares.isAuthenticated,  companiesController.approval);
 routes.put("/companies/:id/approve", authMiddlewares.isMasterAdmin, companiesController.approve);
 
-routes.get("/services", authMiddlewares.isAuthenticated, servicesController.list);
+routes.get("/services", servicesController.list);
 routes.post("/services", authMiddlewares.isAuthenticated, servicesController.store);
 routes.get("/services/:id", authMiddlewares.isAuthenticated, servicesController.index);
 routes.put("/services/:id", authMiddlewares.isAuthenticated, servicesController.update);
