@@ -15,7 +15,8 @@ module.exports = {
             subcategoryId
         } = req.query
 
-        where = {}
+        // TODO Acrescentar cidade de bairro da empresa prestadora do serviço
+        const where = {}
 
         if(companyId) {
             where[companyId] = companyId 
@@ -27,7 +28,10 @@ module.exports = {
             where['subcategory'] = subcategoryId 
         }
 
+        // const services = await Service.find(where)
+
         const services = await Service.find(where)
+            .populate('companyId').exec();
         
         return res.status(200).json(services)
     },

@@ -24,7 +24,7 @@ module.exports = {
 
                     const customerId = subscription.customer
 
-                    console.log(obj)
+                    console.log(subscription)
                     break;
                 // ... handle other event types:
 
