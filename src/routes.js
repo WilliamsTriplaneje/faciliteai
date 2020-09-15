@@ -180,7 +180,7 @@ routes.put("/companies/:id/approve", authMiddlewares.isMasterAdmin, companiesCon
 
 routes.get("/services", servicesController.list);
 routes.post("/services", authMiddlewares.isAuthenticated, servicesController.store);
-routes.get("/services/:id", authMiddlewares.isAuthenticated, servicesController.index);
+routes.get("/services/:id", servicesController.index);
 routes.put("/services/:id", authMiddlewares.isAuthenticated, servicesController.update);
 routes.delete("/services/:id", authMiddlewares.isAuthenticated, servicesController.delete);
 routes.put("/services/:id/approve", authMiddlewares.isAuthenticated, servicesController.approve);
