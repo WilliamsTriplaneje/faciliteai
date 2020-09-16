@@ -81,12 +81,14 @@ module.exports = {
     async index(req, res) {
         const { id } = req.params;
         const service = await Service.findById(id)
+        .populate('companyId').exec();
+        
         if(!service){
             return res.status(400).json({
                 message: "Serviço não encontrada"
             })
           }
-        return res.status(200).json(company)
+        return res.status(200).json(service)
     },
 
     async update(req, res) {

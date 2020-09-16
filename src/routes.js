@@ -201,9 +201,10 @@ routes.delete("/sub-categories/:id", authMiddlewares.isMasterAdmin, subCategorie
 
 routes.get("/stripe/payments/charges", chargesController.list);
 routes.post("/stripe/payments/charges", authMiddlewares.isAuthenticated, chargesController.store);
-routes.get("/stripe/payments/charges/:id", chargesController.index);
-routes.put("/stripe/payments/charges/:id", chargesController.update);
-routes.delete("/stripe/payments/charges/:id", chargesController.delete);
+// routes.get("/stripe/payments/charges/:id", chargesController.index);
+// routes.put("/stripe/payments/charges/:id", chargesController.update);
+// routes.delete("/stripe/payments/charges/:id", chargesController.delete);
+routes.post("/stripe/payments/checkout", authMiddlewares.isAuthenticated, chargesController.checkout);
 
 routes.get("/stripe/plans", plansController.list);
 routes.post("/stripe/plans/checkout", authMiddlewares.isAuthenticated, plansController.checkout);

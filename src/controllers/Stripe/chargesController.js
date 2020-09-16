@@ -3,7 +3,7 @@ const Charge = require("../../models/charge")
 const Service = require("../../models/service");
 
 
-const { APP_URL, PUBLIC_URL } = require("../../config/Constants");
+const { APP_URL, PUBLIC_URL, SITE_URL } = require("../../config/Constants");
 const stripe = require('../../services/stripe')
 const StripeUtils = require('../../utils/StripeUtils')
 
@@ -102,4 +102,63 @@ module.exports = {
     async delete(req, res) {
         const { id } = req.params;
     },
+    async checkout(req, res) {
+        const { serviceId } = req.body;
+        const { _id: userId } = res.locals.user;
+        const user = await User.findById(userId)
+        const service = await Service.findById(serviceId)
+        
+        if(!service) {
+            return res.status(400).json({
+                message: "Serviço não encontrado"
+            })
+        }
+
+        console.log(`${CONTROLLER_NAME} Criando checkout do serviço ${service.name} para o usuário ${user.email}`)
+        const customer = await StripeUtils.findOrCreateCustomer(user)
+
+        if(!customer) {
+            return res.status(400).json({
+                message: "Costumer Stripe não encontrado"
+            })
+        }
+
+        await User.updateOne({
+            _id: userId
+        },{ $set: 
+            { 
+                stripeId: customer.id
+            } 
+        })
+
+        const charge = await Charge.create({
+            userId: user._id,
+            serviceId: service._id,
+            price: service.price,
+            date: Date.now()
+        })
+
+        const session = await stripe.checkout.sessions.create({
+            customer: customer.id,
+            payment_method_types: ['card'],
+            line_items: [{
+                price_data: {
+                  currency: 'BRL',
+                  product_data: {
+                    name: service.name,
+                    images: [],
+                  },
+                  unit_amount: service.price * 100,
+                },
+                quantity: 1,
+              },
+            ],
+            mode: 'payment',
+            success_url: `${SITE_URL}/${charge.id}/sucesso-no-pagamento`,
+            cancel_url: `${SITE_URL}/${charge.id}/falha-no-pagamento`,
+        });
+
+        return res.status(201).json(session)
+    },
+    
 };
