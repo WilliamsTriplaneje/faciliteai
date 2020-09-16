@@ -12,14 +12,24 @@ module.exports = {
         const stripePlans = await stripe.plans.list({
             // limit: 3
             active: true
-        });
+        })
         
         const plans = stripePlans.data
-        const plan = await stripe.plans.retrieve(
-            plans[0].id
-          );
-        console.log(plan)
-        return res.status(200).json(plans)
+
+        const planInfos = await Promise.all(plans.map(async (plan) => {
+            const product = await stripe.products.retrieve(
+                plan.product
+            );
+            const { description, name } = await product.metadata
+
+            return {
+                ...plan,
+                description,
+                name
+            }
+        })).then((res) => res)
+        
+        return res.status(200).json(planInfos)
     },
 
     // async store(req, res) {
@@ -81,7 +91,7 @@ module.exports = {
     // },
     async checkout(req, res) {
         const { planId } = req.body;
-        const { _id: userId , email} = res.locals.user;
+        const { _id: userId , email } = res.locals.user;
 
         console.log(`${CONTROLLER_NAME} Criando checkout para o usuário ${email} no plano ${planId}`)
         const user = await User.findById(userId)
