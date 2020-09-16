@@ -9,9 +9,16 @@ const CONTROLLER_NAME = 'PLANS'
 module.exports = {
     async list(req, res) {
         console.log(`${CONTROLLER_NAME} Listando...`)
-        const stripePlans = await stripe.plans.list({limit: 3});
+        const stripePlans = await stripe.plans.list({
+            // limit: 3
+            active: true
+        });
+        
         const plans = stripePlans.data
-
+        const plan = await stripe.plans.retrieve(
+            plans[0].id
+          );
+        console.log(plan)
         return res.status(200).json(plans)
     },
 
