@@ -23,12 +23,14 @@ app.use(process.env.PUBLIC_URL, express.static(path.resolve(__dirname, '..', 'tm
 //START APP ON SERVER
 const start = async () =>{
   //BEFORE, START DATABASE (MONGODB WITH MONGOOSE)
-  console.log(`Conectando ao mongodb no endereço: ${process.env.MONGO_URL}`)
   await mongoose.connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true ,
     useFindAndModify: true
+  }).catch((err)=> {
+    console.log("Erro ao tentar conectar ao MONGODB")
+    console.log(err)
   })
   const port = 3333
   app.listen(process.env.PORT || port, ()=>{
