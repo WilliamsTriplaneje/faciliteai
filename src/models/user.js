@@ -38,4 +38,7 @@ userSchema.pre("save", async function (next) {
   this.password = await getHashPassword(this.password)
   next();
 });
+
+// TODO Encriptar automanticamente a senha do usuário antes de dar um update nele
+
 module.exports = mongoose.model("user", userSchema);

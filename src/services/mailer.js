@@ -31,7 +31,14 @@ async function sendConfirmationEmail(user, url){
     `<h1>Por favor clique abaixo para confirmar seu email </h>${url}`
     )
 }
+
+async function sendRecoveryPasswordEmail(user, url){
+    return await sendEmail(user.email, 'Recuperação de senha Facilite Ai', 
+    `<h1>Por favor clique abaixo para recuperar sua senha </h>${url}`
+    )
+}
 module.exports = {
     sendEmail,
-    sendConfirmationEmail
+    sendConfirmationEmail,
+    sendRecoveryPasswordEmail
 }

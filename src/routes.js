@@ -165,6 +165,10 @@ routes.get('/files/index', uploadProviderController.index)
 routes.post("/login", authenticationsController.login); //LOGIN
 routes.post("/register", authMiddlewares.registerMiddleware,  authenticationsController.register);
 routes.post("/confirm-email",  authenticationsController.confirmEmail);
+routes.post("/send-recovery-password",  authenticationsController.sendRecoveryPassword);
+routes.put("/recovery-password",  authenticationsController.recoveryPassword);
+
+
 
 
 routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.store);

@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 const { getHashPassword } = require('../utils/AuthUtils')
 
-const confirmationEmailSchema = new mongoose.Schema({
+const recoveryPasswordSchemas = new mongoose.Schema({
     userId: String,
+    isUsed: {
+        type: Boolean,
+        default: false
+    },
     expiresAt: {
         type: Date,
         default: () => {
@@ -16,8 +20,8 @@ const confirmationEmailSchema = new mongoose.Schema({
         default: Date.now,
     },
 });
-confirmationEmailSchema.virtual('isValid').get(function() {
+recoveryPasswordSchemas.virtual('isValid').get(function() {
     return this.expiresAt >= Date.now()
 });
 
-module.exports = mongoose.model("confirmationEmail", confirmationEmailSchema);
+module.exports = mongoose.model("recoveryPassword", recoveryPasswordSchemas);
