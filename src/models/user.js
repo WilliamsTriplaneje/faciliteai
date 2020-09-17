@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
     },
+    emailIsConfirmed: {
+        type: Boolean,
+        required: false,
+        default: false,
+    },
     password: {
         type: String,
         select: false,

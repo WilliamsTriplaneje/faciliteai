@@ -164,6 +164,8 @@ routes.get('/files/index', uploadProviderController.index)
 
 routes.post("/login", authenticationsController.login); //LOGIN
 routes.post("/register", authMiddlewares.registerMiddleware,  authenticationsController.register);
+routes.post("/confirm-email",  authenticationsController.confirmEmail);
+
 
 routes.post("/companies", authMiddlewares.isAuthenticated,  companiesController.store);
 routes.get("/companies/:id", authMiddlewares.isAuthenticated,  companiesController.index);

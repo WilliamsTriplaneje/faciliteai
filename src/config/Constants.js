@@ -11,6 +11,8 @@ module.exports = {
     STRIPE_PUBLIC: process.env.STRIPE_PUBLIC,
     STRIPE_SECRET: process.env.STRIPE_SECRET,
     STRIPE_ENPOINT_SECRET: process.env.STRIPE_ENDPOINT_SECRET,
-
+    EMAIL_NAME: process.env.EMAIL_NAME,
+    EMAIL_EMAIL: process.env.EMAIL_EMAIL,
+    EMAIL_PASSWORD: process.env.EMAIL_PASSWORD
 
 }
