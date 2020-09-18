@@ -14,5 +14,4 @@ module.exports = {
     EMAIL_NAME: process.env.EMAIL_NAME,
     EMAIL_EMAIL: process.env.EMAIL_EMAIL,
     EMAIL_PASSWORD: process.env.EMAIL_PASSWORD
-
 }

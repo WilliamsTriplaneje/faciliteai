@@ -83,14 +83,16 @@ const isMasterAdmin = async (req, res, next) => {
 
 const registerMiddleware = async (req, res, next) => {
     let token = req.headers['x-access-token']
+    const selectedRoles = req.body.roles
+
+    const { isClient } = req.body
+    if(isClient){
+        req.body.roles = DEFAULT_CLIENT_ROLES
+    }else{
+        req.body.roles = DEFAULT_PROVIDER_ROLES
+    }
+    
     if (!token) {
-        const { isClient } = req.body
-        if(isClient){
-            req.body.roles = DEFAULT_CLIENT_ROLES
-        }else{
-            req.body.roles = DEFAULT_PROVIDER_ROLES
-        }
-        
         next()
         return
     }
@@ -106,8 +108,8 @@ const registerMiddleware = async (req, res, next) => {
             message: 'Token inválido'
         })
     }
-    if(!verifyRole(user.roles, 'master-admin')){
-        req.body.roles = DEFAULT_ROLES
+    if(verifyRole(user.roles, 'master-admin')){
+        req.body.roles = selectedRoles
     }
     res.locals.user = user
     next()
