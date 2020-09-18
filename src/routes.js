@@ -32,6 +32,8 @@ const subCategoriesController = require("./controllers/subCategoriesController")
 const chargesController = require("./controllers/Stripe/chargesController");
 const clientsController = require("./controllers/clientsController");
 const plansController = require("./controllers/Stripe/plansController");
+const usersController = require("./controllers/usersController");
+
 
 
 
@@ -227,6 +229,12 @@ routes.post("/clients", clientsController.store);
 routes.get("/clients/:id", clientsController.index);
 routes.put("/clients/:id", clientsController.update);
 routes.delete("/clients/:id", clientsController.delete);
+
+routes.get("/users", usersController.list);
+// routes.post("/users", usersController.store);
+routes.get("/users/:id", usersController.index);
+routes.put("/users/:id", usersController.update);
+routes.delete("/users/:id", usersController.delete);
 
 
 
