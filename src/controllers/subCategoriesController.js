@@ -6,19 +6,24 @@ const Category = require("../models/category");
 module.exports = {
     async list(req, res) {
         const {
-            categoryId
+            categoryId,
+            includeCategory
         } = req.query
 
+        let where = {}
+        
         if(categoryId){
-            const category = await SubCategory.find({
-                categoryId
-            })
-
-            return res.status(200).json(category)
+            where['category'] = categoryId
         }
-        const category = await SubCategory.find()
+        const subCategories = await SubCategory.find({
+            ...where
+        })
 
-        return res.status(200).json(category)
+        if(includeCategory){
+            subCategories.populate('category').exec()
+        }
+
+        return res.status(200).json(subCategories)
     },
 
     async store(req, res) {
