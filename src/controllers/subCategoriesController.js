@@ -15,15 +15,13 @@ module.exports = {
         if(categoryId){
             where['category'] = categoryId
         }
-        const subCategories = await SubCategory.find({
-            ...where
-        })
+        const subCategories = SubCategory.find(where)
 
         if(includeCategory){
-            subCategories.populate('category').exec()
+            subCategories.populate('categoryId').exec()
         }
 
-        return res.status(200).json(subCategories)
+        return res.status(200).json(await subCategories)
     },
 
     async store(req, res) {
@@ -42,7 +40,6 @@ module.exports = {
         const subCategory = await SubCategory.create({
             name,
             categoryId: category._id,
-            categoryName: category.name
         })
 
         if(!subCategory){
@@ -75,7 +72,6 @@ module.exports = {
         // const subCategory = await SubCategory.findByIdAndUpdate(id, {
         //     name,
         //     categoryId: category._id,
-        //     categoryName: category.name
         // })
 
         const subCategory = await SubCategory.updateOne({
@@ -83,8 +79,7 @@ module.exports = {
           }, { $set: 
             { 
                 name,
-                categoryId: category._id,
-                categoryName: category.name
+                categoryId: category._id
             } 
           });
 
