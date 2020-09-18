@@ -130,7 +130,7 @@ module.exports = {
         })
         .then(() => true)
         .catch((err) => {
-            console.log(`Erro ao confirmar email do usuário ${user.email}`)
+            console.log(`Erro ao confirmar email do usuário`)
             console.log(err)
             return false
         })
