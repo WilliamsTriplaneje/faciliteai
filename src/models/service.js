@@ -1,5 +1,6 @@
 //IMPORTS
 const mongoose = require("mongoose");
+const { OnlyNotDeleted } = require("../utils/MongooseUtils");
 
 //SCHEMA DATA
 const serviceSchema = new mongoose.Schema({
@@ -40,6 +41,20 @@ const serviceSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+    select: false,
+  }
+});
+
+serviceSchema.pre("findOne", async function (next) {
+  OnlyNotDeleted(this)
+  next();
+});
+serviceSchema.pre("find", async function (next) {
+  OnlyNotDeleted(this)
+  next();
 });
 
 //EXPORT

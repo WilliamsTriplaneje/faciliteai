@@ -29,7 +29,9 @@ module.exports = {
 
     async index(req, res) {
         const { id } = req.params;
-        const company = await Category.findById(id)
+        const company = await Category.findOne({
+            _id: id
+        })
         return res.status(200).json(company)
     },
 
@@ -55,11 +57,17 @@ module.exports = {
     
     async delete(req, res) {
         const { id } = req.params;
-        return await Category.findByIdAndDelete(id)
-            .then((result)=> {
-                return res.status(204).json({
-                    message: "Categoria deletado com sucesso"
-                })
+        return await await Category.updateOne({
+            _id: id
+          }, { $set: 
+            { 
+                isDeleted: true,
+            } 
+          })
+          .then((result)=> {
+            return res.status(204).json({
+                message: "Categoria deletado com sucesso"
+            })
             })
             .catch((err) => {
                 return res.status(400).json({

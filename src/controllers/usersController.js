@@ -14,7 +14,9 @@ module.exports = {
         const { id } = req.params;
         console.log(`${CONTROLLER_NAME} Listando ${id}`)
 
-        const user = await User.findById(id)
+        const user = await User.findOne({
+            _id: id
+        })
         return res.status(200).json(user)
     },
 
@@ -24,7 +26,7 @@ module.exports = {
         const fields = getNotEmpty(req.body)
 
         const user = await User.updateOne({
-            _id: id
+            _id: id,
           }, { 
               $set: fields
           });
@@ -36,8 +38,13 @@ module.exports = {
         const { id } = req.params;
         console.log(`${CONTROLLER_NAME} Deletando ${id}`)
 
-        return await User.findByIdAndDelete(id)
-            .then((result)=> {
+        return await User.updateOne({
+            _id: id,
+          }, { 
+              $set: {
+                  isDeleted: true
+              }
+          }).then((result)=> {
                 return res.status(204).json({
                     message: "Usuário deletado com sucesso"
                 })

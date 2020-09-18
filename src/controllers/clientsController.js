@@ -27,7 +27,9 @@ module.exports = {
     async index(req, res) {
         const { id } = req.params;
         console.log(`${CONTROLLER_NAME} Listando ${id}`)
-        const client = await Client.findById(id)
+        const client = await Client.findOne({
+            _id: id
+        })
         return res.status(200).json(client)
     },
 
@@ -39,7 +41,7 @@ module.exports = {
 
         console.log(`${CONTROLLER_NAME} Atualizando ${id}`)
 
-        const client = await Category.updateOne({
+        const client = await Client.updateOne({
             _id: id
           }, { $set: 
             { 
@@ -52,11 +54,16 @@ module.exports = {
     
     async delete(req, res) {
         const { id } = req.params;
-        return await Client.findByIdAndDelete(id)
-            .then((result)=> {
+        return await Client.updateOne({
+            _id: id
+          }, { $set: 
+            { 
+                isDeleted: true,
+            } 
+          }).then((result)=> {
                 return res.status(204).json({
                     message: "Cliente deletado com sucesso"
-                })
+            })
             })
             .catch((err) => {
                 console.log(`${CONTROLLER_NAME} Erro ao deletar ${id}`)

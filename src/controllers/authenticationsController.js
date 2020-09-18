@@ -83,7 +83,9 @@ module.exports = {
 
         console.log(`${CONTROLLER_NAME} Confirmando email com o código ${confirmationEmailId}`)
 
-        const confirmation = await ConfirmationEmail.findById(confirmationEmailId)
+        const confirmation = await ConfirmationEmail.findOne({
+            _id: confirmationEmailId
+        })
 
         if (!confirmation) return res.status(400).send({ error: "Confirmation not found" });
 
@@ -115,7 +117,9 @@ module.exports = {
         } = req.body
         console.log(`${CONTROLLER_NAME} Alterando senha com o código ${recoveryPasswordId}`)
 
-        const recovery = await RecoveryPassword.findById(recoveryPasswordId)
+        const recovery = await RecoveryPassword.findOne({
+            _id: recoveryPasswordId
+        })
 
         if (!recovery) return res.status(400).send({ error: "Recovery not found" });
         if (recovery.isUsed === true) return res.status(400).send({ error: "Recovery already used" });

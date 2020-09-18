@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { getHashPassword } = require('../utils/AuthUtils')
+const { OnlyNotDeleted } = require("../utils/MongooseUtils");
 
 const clientSchema = new mongoose.Schema({
     email: {
@@ -14,6 +15,11 @@ const clientSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     },
+    isDeleted: {
+        type: Boolean,
+        default: false,
+        select: false,
+    }
 });
 
 clientSchema.statics.findOneOrCreate = async function findOneOrCreate(condition) {
@@ -29,5 +35,15 @@ clientSchema.statics.findOneOrCreate = async function findOneOrCreate(condition)
         return null
     })
 }
+
+clientSchema.pre("findOne", async function (next) {
+    OnlyNotDeleted(this)
+    next();
+});
+clientSchema.pre("find", async function (next) {
+    OnlyNotDeleted(this)
+    next();
+});
+
 
 module.exports = mongoose.model("client", clientSchema);

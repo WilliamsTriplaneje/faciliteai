@@ -48,7 +48,9 @@ module.exports = {
   async index(req, res) {
     const { id } = req.params
     console.log(`${CONTROLLER_NAME} listando empresa ${id}`)
-    const company = await Company.findById(id)
+    const company = await Company.findOne({
+      _id: id
+    })
     if(!company){
       return res.status(400).json({
           message: "Empresa não encontrada"
@@ -116,12 +118,19 @@ module.exports = {
     return res.json(data)
   },
   async getCompany(req,res){
-    const data = await Company.findById(req.params.id)
+    const data = await Company.findOne({
+      _id: req.params.id
+    })
     return res.json(data)
   },
   //APROVAÇÃO
   async approval(req, res) {
-    const approval = await Company.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const approval = await Company.updateOne({
+      _id: req.params.id
+    }, { $set: req.body 
+    });
+
+    // const approval = await Company.findByIdAndUpdate(req.params.id, req.body, { new: true });
     return res.json(approval)
   },
 
@@ -131,14 +140,17 @@ module.exports = {
         isApproved
     } = req.body
 
-    const company = await Company.findByIdAndUpdate(id, {
+    const company = await Company.updateOne({
+      _id: id
+    }, { $set: {
         isActive: isApproved,
         isInAnalysis: false
-    })
+    }
+    });
 
     if(!company){
         return res.status(500).json({})
     }
     return res.status(201).json({})
-},
+  },
 };

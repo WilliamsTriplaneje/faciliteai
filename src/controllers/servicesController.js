@@ -48,7 +48,9 @@ module.exports = {
         } = req.body
 
         console.log(`${CONTROLLER_NAME} Cadastrando serviço da empresa ${companyId}`)
-        const company = await Company.findById(companyId)
+        const company = await Company.findOne({
+            _id: companyId
+        })
         if(!company){
             return res.status(400).json({
                 message: "Empresa não encontrada"
@@ -80,7 +82,9 @@ module.exports = {
 
     async index(req, res) {
         const { id } = req.params;
-        const service = await Service.findById(id)
+        const service = await Service.findOne({
+            _id: id
+        })
         .populate('companyId').exec();
         
         if(!service){
@@ -132,8 +136,13 @@ module.exports = {
     async delete(req, res) {
         const { id } = req.params;
 
-        return await Service.findByIdAndDelete(id)
-            .then((result)=> {
+        return await Service.updateOne({
+            _id: id
+          }, { $set: 
+            { 
+                isDeleted: true,
+            } 
+          }).then((result)=> {
                 return res.status(204).json({
                     message: "Serviço deletado com sucesso"
                 })

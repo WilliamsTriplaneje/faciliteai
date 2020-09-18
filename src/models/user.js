@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const { getHashPassword } = require("../utils/AuthUtils");
+const { OnlyNotDeleted } = require("../utils/MongooseUtils");
+
 
 const userSchema = new mongoose.Schema({
   name: String,
@@ -34,6 +36,11 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+    select: false,
+  }
 });
 //PRE SAVE INCRYPT PASSWORD
 userSchema.pre("save", async function (next) {
@@ -54,6 +61,14 @@ userSchema.pre("updateOne", async function (next) {
   next();
 });
 
-// TODO Encriptar automanticamente a senha do usuário antes de dar um update nele
+userSchema.pre("findOne", async function (next) {
+    OnlyNotDeleted(this)
+    next();
+});
+userSchema.pre("find", async function (next) {
+    OnlyNotDeleted(this)
+    next();
+});
+
 
 module.exports = mongoose.model("user", userSchema);

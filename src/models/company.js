@@ -1,5 +1,6 @@
 //IMPORTS
 const mongoose = require("mongoose");
+const { OnlyNotDeleted } = require("../utils/MongooseUtils");
 
 //SCHEMA DATA
 const companySchema = new mongoose.Schema({
@@ -81,7 +82,22 @@ const companySchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+    select: false,
+  }
 });
+
+companySchema.pre("findOne", async function (next) {
+  OnlyNotDeleted(this)
+  next();
+});
+companySchema.pre("find", async function (next) {
+  OnlyNotDeleted(this)
+  next();
+});
+
 
 //EXPORT
 module.exports = mongoose.model("company", companySchema);
